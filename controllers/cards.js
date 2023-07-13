@@ -18,6 +18,7 @@ module.exports.createCard = (req, res) => {
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send({
       data: {
+        _id: card._id,
         name: card.name,
         link: card.link,
       },
