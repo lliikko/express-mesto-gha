@@ -4,10 +4,10 @@ module.exports.getCards = (req, res) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
     .catch((err) => {
-      if (err.name === 'IncorrectDataError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные' });
       }
-      if (err.name === 'NotFoundError') {
+      if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
@@ -23,10 +23,10 @@ module.exports.createCard = (req, res) => {
       },
     }))
     .catch((err) => {
-      if (err.name === 'IncorrectDataError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные' });
       }
-      if (err.name === 'NotFoundError') {
+      if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
@@ -36,10 +36,10 @@ module.exports.deleteCardById = (req, res) => {
   Card.findByIdAndRemove(req.params.cardId)
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'IncorrectDataError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные' });
       }
-      if (err.name === 'NotFoundError') {
+      if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
@@ -53,10 +53,10 @@ module.exports.likeCard = (req, res) => {
   )
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'IncorrectDataError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные' });
       }
-      if (err.name === 'NotFoundError') {
+      if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
@@ -70,10 +70,10 @@ module.exports.dislikeCard = (req, res) => {
   )
     .then((card) => res.send({ data: card }))
     .catch((err) => {
-      if (err.name === 'IncorrectDataError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные' });
       }
-      if (err.name === 'NotFoundError') {
+      if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
       return res.status(500).send({ message: 'Произошла ошибка' });
