@@ -50,7 +50,8 @@ module.exports.getUserById = (req, res) => {
 };
 module.exports.updateUserInfo = (req, res) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
+  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
+    .orFail()
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -65,9 +66,10 @@ module.exports.updateUserInfo = (req, res) => {
 module.exports.updateUserAvatar = (req, res) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true })
+    .orFail()
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
-      if (err.name === 'IncorrectDataError') {
+      if (err.name === 'ValidationError') {
         return res.status(400).send({ message: 'Переданы некорректные данные' });
       }
       if (err.name === 'NotFoundError') {
