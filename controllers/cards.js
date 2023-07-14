@@ -10,7 +10,7 @@ module.exports.getCards = (req, res) => {
       if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 module.exports.createCard = (req, res) => {
@@ -30,7 +30,7 @@ module.exports.createCard = (req, res) => {
       if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 module.exports.deleteCardById = (req, res) => {
@@ -44,7 +44,7 @@ module.exports.deleteCardById = (req, res) => {
       if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 module.exports.likeCard = (req, res) => {
@@ -62,7 +62,7 @@ module.exports.likeCard = (req, res) => {
       if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 module.exports.dislikeCard = (req, res) => {
@@ -80,6 +80,6 @@ module.exports.dislikeCard = (req, res) => {
       if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Карточка не найдена.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };

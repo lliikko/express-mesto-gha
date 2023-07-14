@@ -10,7 +10,7 @@ module.exports.getUsers = (req, res) => {
       if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Пользователь не найден.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 module.exports.createUser = (req, res) => {
@@ -31,7 +31,7 @@ module.exports.createUser = (req, res) => {
       if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Пользователь не найден.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 module.exports.getUserById = (req, res) => {
@@ -45,7 +45,7 @@ module.exports.getUserById = (req, res) => {
       if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Пользователь не найден.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 module.exports.updateUserInfo = (req, res) => {
@@ -60,7 +60,7 @@ module.exports.updateUserInfo = (req, res) => {
       if (err.name === 'DocumentNotFoundError') {
         return res.status(404).send({ message: 'Пользователь не найден.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
 module.exports.updateUserAvatar = (req, res) => {
@@ -75,6 +75,6 @@ module.exports.updateUserAvatar = (req, res) => {
       if (err.name === 'NotFoundError') {
         return res.status(404).send({ message: 'Пользователь не найден.' });
       }
-      return res.status(500).send({ message: 'Произошла ошибка' });
+      return res.status(500).send({ message: 'На сервере произошла ошибка' });
     });
 };
