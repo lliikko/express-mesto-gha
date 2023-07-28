@@ -3,42 +3,43 @@ const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const UnauthorizedError = require('../errors/unauthorized');
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: validator.isEmail,
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: {
+        validator: validator.isEmail,
+      },
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 8,
+      select: false,
+    },
+    name: {
+      type: String,
+      minlength: [2, 'Минимальная длина поля - 2 символа'],
+      maxlength: [30, 'Максимальная длина поля - 30 символов'],
+      default: 'Жак-Ив Кусто',
+    },
+    about: {
+      type: String,
+      minlength: [2, 'Минимальная длина поля - 2 символа'],
+      maxlength: [30, 'Максимальная длина поля - 30 символов'],
+      default: 'Исследователь',
+    },
+    avatar: {
+      type: String,
+      default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
+      validate: {
+        validator: validator.isURL,
+      },
     },
   },
-  password: {
-    type: String,
-    required: true,
-    minlength: 8,
-    select: false,
-  },
-  name: {
-    type: String,
-    minlength: [2, 'Минимальная длина поля - 2 символа'],
-    maxlength: [30, 'Максимальная длина поля - 30 символов'],
-    default: 'Жак-Ив Кусто',
-  },
-  about: {
-    type: String,
-    minlength: [2, 'Минимальная длина поля - 2 символа'],
-    maxlength: [30, 'Максимальная длина поля - 30 символов'],
-    default: 'Исследователь',
-  },
-  avatar: {
-    type: String,
-    default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
-    validate: {
-      validator: validator.isURL,
-    },
-  },
-},
-{ versionKey: false },
+  { versionKey: false },
 );
 
 userSchema.statics.findUserByCredentials = function (email, password) {
