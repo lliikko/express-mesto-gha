@@ -18,7 +18,7 @@ module.exports.getUserInfo = (req, res, next) => {
     .then((user) => {
       if (user) return res.send({ user });
 
-      throw new NotFoundError('Пользователь с таким id не найден');
+      throw new NotFoundError('Пользователь не найден');
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -78,7 +78,8 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getUserById = (req, res, next) => {
-  User.findById(req.params.userId)
+  const { userId } = req.params;
+  User.findById(userId)
     .then((user) => {
       if (user) return res.status(200).send({ user });
       throw new NotFoundError('Пользователь не найден');
