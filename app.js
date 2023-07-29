@@ -2,8 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
 const auth = require('./middlewares/auth');
-
+const error = require('./middlewares/error');
 const NotFoundError = require('./errors/not-found');
 
 const { PORT = 3000 } = process.env;
@@ -28,6 +29,8 @@ app.use((req, res, next) => {
   next(new NotFoundError('Страницы не существует'));
 });
 
+app.use(errors());
+app.use(error);
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });

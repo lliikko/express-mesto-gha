@@ -5,7 +5,7 @@ module.exports = function (req, res, next) {
   const token = req.cookies.jwt;
 
   if (!token) {
-    throw new UnauthorizedError();
+    throw new UnauthorizedError('Пользователь не авторизован');
   }
 
   let payload;
@@ -13,7 +13,7 @@ module.exports = function (req, res, next) {
   try {
     payload = jwt.verify(token, 'super-strong-secret');
   } catch (err) {
-    throw new UnauthorizedError();
+    throw new UnauthorizedError('Пользователь не авторизован');
   }
 
   req.user = payload;
