@@ -22,29 +22,35 @@ module.exports.createCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные'));
+        return;
       }
       if (err.name === 'DocumentNotFoundError') {
         next(new NotFoundError('Карточка не найдена'));
+        return;
       }
       next(err);
     });
 };
 module.exports.deleteCardById = (req, res, next) => {
-  Card.findByIdAndRemove(req.params.cardId)
-    .orFail()
+  const { cardId } = req.params;
+  const ownerId = req.user._id;
+
+  Card.findById(cardId)
     .then((card) => {
-      if (card.owner._id.toString() === req.user._id) {
-        res.status(200).send({ data: card });
-      } else {
-        throw new ForbidenError();
+      if (card === null) {
+        throw new NotFoundError('Карточка не найдена');
       }
+      if (card.owner.toString() !== ownerId) {
+        throw new ForbidenError('Попытка удаления чужой карточки');
+      }
+      return card;
     })
+    .then((card) => Card.remove(card))
+    .then((card) => res.status(200).send({ card }))
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные'));
-      }
-      if (err.name === 'DocumentNotFoundError') {
-        next(new NotFoundError('Карточка не найдена'));
+        next(new BadRequestError('Карточка не найдена'));
+        return;
       }
       next(err);
     });
@@ -60,9 +66,11 @@ module.exports.likeCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Переданы некорректные данные'));
+        return;
       }
       if (err.name === 'DocumentNotFoundError') {
         next(new NotFoundError('Карточка не найдена'));
+        return;
       }
       next(err);
     });
@@ -78,9 +86,11 @@ module.exports.dislikeCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Переданы некорректные данные'));
+        return;
       }
       if (err.name === 'DocumentNotFoundError') {
         next(new NotFoundError('Карточка не найдена'));
+        return;
       }
       next(err);
     });

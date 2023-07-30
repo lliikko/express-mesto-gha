@@ -37,7 +37,7 @@ module.exports.createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, about, avatar, email, password: hash,
     })
-      .then((user) => res.status(200).send({
+      .then((user) => res.status(201).send({
         data: {
           _id: user._id,
           name: user.name,
@@ -49,11 +49,13 @@ module.exports.createUser = (req, res, next) => {
     .catch((err) => {
       if (err.code === 11000) {
         next(new ConflictError('Пользователь уже зарегистрирован'));
-      } else if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные'));
-      } else {
-        next(err);
+        return;
       }
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Переданы некорректные данные'));
+        return;
+      }
+      next(err);
     });
 };
 module.exports.login = (req, res, next) => {
@@ -87,9 +89,9 @@ module.exports.getUserById = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestError('Переданы некорректные данные'));
-      } else {
-        next(err);
+        return;
       }
+      next(err);
     });
 };
 module.exports.updateUserInfo = (req, res, next) => {
